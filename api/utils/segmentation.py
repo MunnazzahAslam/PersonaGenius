@@ -665,53 +665,49 @@ def calculate_dashboard_metrics(response, dataset, cluster_col='label'):
 
                 if chart["type"] == "pie":
                     if x_column and x_column in df.columns:
-                        value_counts = df[x_column].value_counts()
-                        chart["data"] = {
-                            "labels": value_counts.index.tolist(),
-                            "datasets": [{
-                                "label": f"Distribution of {x_column}",
-                                "data": value_counts.tolist(),
-                            }]
+                        overall_value_counts = df[x_column].value_counts()
+                        overall_distribution = {
+                            "label": f"Overall Distribution of {x_column}",
+                            "data": overall_value_counts.tolist(),
+                            "cluster_values": {str(cluster): group[x_column].value_counts().tolist() for cluster, group in df.groupby(cluster_col)}
                         }
-
-                elif chart["type"] == "line":
-                    if x_column in df.columns and y_column in df.columns:
-                        grouped = df.groupby(x_column)[y_column].sum().reset_index()
-                        x_data = grouped[x_column].tolist()
-                        y_data = grouped[y_column].tolist()
                         chart["data"] = {
-                            "labels": x_data,
-                            "datasets": [{
-                                "label": f"Line Chart of {y_column} over {x_column}",
-                                "data": y_data,
-                            }]
-                        }
-
-                elif chart["type"] == "bar":
-                    if x_column in df.columns and y_column in df.columns:
-                        grouped = df.groupby(x_column)[y_column].sum().reset_index()
-                        x_data = grouped[x_column].tolist()
-                        y_data = grouped[y_column].tolist()
-                        chart["data"] = {
-                            "labels": x_data,
-                            "datasets": [{
-                                "label": f"Bar Chart of {y_column} over {x_column}",
-                                "data": y_data,
-                            }]
+                            "labels": overall_value_counts.index.tolist(),
+                            "datasets": [overall_distribution]
                         }
 
                 elif chart["type"] == "scatter":
                     if x_column in df.columns and y_column in df.columns:
-                        scatter_data = [
-                            {"x": df[x_column].iloc[i], "y": df[y_column].iloc[i]}
-                            for i in range(len(df))
-                        ]
+                        scatter_data = [{"x": df[x_column].iloc[i], "y": df[y_column].iloc[i]} for i in range(len(df))]
                         chart["data"] = {
                             "datasets": [{
                                 "label": f"Scatter Plot of {y_column} vs {x_column}",
-                                "data": scatter_data,
+                                "data": scatter_data
                             }]
                         }
+
+                elif chart["type"] == "line" or chart["type"] == "bar":
+                    if x_column in df.columns and y_column in df.columns:
+                        overall_grouped = df.groupby(x_column)[y_column].sum().reset_index()
+                        overall_x_data = overall_grouped[x_column].tolist()
+                        overall_y_data = overall_grouped[y_column].tolist()
+                        overall_chart_data = {
+                            "label": f"{chart['type'].capitalize()} Chart of {y_column} over {x_column}",
+                            "data": overall_y_data,
+                            "cluster_values": {}
+                        }
+
+                        for cluster, group in df.groupby(cluster_col):
+                            cluster_grouped = group.groupby(x_column)[y_column].sum().reset_index()
+                            cluster_x_data = cluster_grouped[x_column].tolist()
+                            cluster_y_data = cluster_grouped[y_column].tolist()
+                            overall_chart_data["cluster_values"][str(cluster)] = cluster_y_data
+
+                        chart["data"] = {
+                            "labels": overall_x_data,
+                            "datasets": [overall_chart_data]
+                        }
+
                         
     # Convert response to JSON string, repair it, then convert back to dictionary
     response_json_str = json.dumps(response, cls=NumpyEncoder)

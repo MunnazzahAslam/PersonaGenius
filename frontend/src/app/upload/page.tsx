@@ -10,7 +10,7 @@ import CustomSelect from '@/components/ui/multi-select';
 
 export default function Page() {
   const [file, setFile] = useState<File | null>(null);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<Options[]>([]);
   const [loading, setLoading] = useState(false);
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [options, setOptions] = useState<Options[]>([]);
@@ -140,7 +140,7 @@ export default function Page() {
     }
   };
 
-  const handleTypeSelect = (selectedOptions: any) => {
+  const handleTypeSelect = (selectedOptions: Options[]) => {
     setSelected(selectedOptions);
   };
 

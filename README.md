@@ -15,7 +15,6 @@
 7. [Design Methodology Diagram](#design-methodology-diagram)
 8. [Datasets](#datasets)
 9. [Screenshots](#screenshots)
-10. [Demo of Results](#demo-of-results)
 
 ## Introduction
 PersonaGenius is a web application that generates customer personas based on your ecommerce dataset. Whether you're a marketer, product designer, or UX researcher, creating personas can be time-consuming. PersonaGenius simplifies this process by allowing you to specify attributes such as demographics, interests, and behaviors, and then generates detailed personas for your projects.
@@ -98,6 +97,3 @@ PersonaGenius lets you personalize your workspace with custom themes. Choose bet
 ![PersonaGenius Cover Photo](frontend/public/assets/demo/10.png)
 ![PersonaGenius Cover Photo](frontend/public/assets/demo/11.png)
 ![PersonaGenius Cover Photo](frontend/public/assets/demo/12.png)
-
-## Demo of Results
-Link: 

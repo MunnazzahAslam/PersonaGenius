@@ -95,3 +95,56 @@ export type ClusteringResponseObject = {
   cluster_summaries: string[];
   cluster_personas: CustomerPersona[];
 }
+
+export interface Metric {
+  title: string;
+  col_name: string;
+  function: string;
+  value: number;
+  cluster_values: {
+      [key: string]: number;
+  };
+}
+
+
+export interface DataSet {
+  label: string;
+  data: number[] | { x: number; y: number }[];
+  cluster_values: {
+    [key: string]: number
+  };
+}
+
+export interface ChartData {
+  labels: (string | number)[];
+  datasets: DataSet[];
+}
+
+export interface ChartItem {
+  title: string;
+  type: string;
+  x_axis_column: string;
+  y_axis_column: string;
+  data: ChartData;
+}
+
+export interface CardItem {
+  title: string;
+  col_name: string;
+  function: string;
+  value: number;
+  cluster_values: {
+      [key: string]: number;
+  };
+}
+
+export interface Row {
+  row_type: string;
+  items?: CardItem[];
+  charts?: ChartItem[];
+}
+
+export interface Response {
+  dashboard_title: string;
+  rows: Row[];
+}
