@@ -18,7 +18,7 @@
 10. [Demo of Results](#demo-of-results)
 
 ## Introduction
-PersonaGenius is a web application that generates fictional personas based on user-defined criteria. Whether you're a marketer, product designer, or UX researcher, creating personas can be time-consuming. PersonaGenius simplifies this process by allowing you to specify attributes such as demographics, interests, and behaviors, and then generates detailed personas for your projects.
+PersonaGenius is a web application that generates customer personas based on your ecommerce dataset. Whether you're a marketer, product designer, or UX researcher, creating personas can be time-consuming. PersonaGenius simplifies this process by allowing you to specify attributes such as demographics, interests, and behaviors, and then generates detailed personas for your projects.
 
 ## Features
 
